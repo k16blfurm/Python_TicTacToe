@@ -2,16 +2,16 @@
 from array import *
 
 def funcl(brd):
-	tic = ("   a     b     c\n"                                                
-	       "      |     |     \n"                                                     
-	       "1  %d  |  %d  |  %d  \n"                                                     
-	       " _____|_____|_____\n"                                                     
-	       "      |     |     \n"                                                     
-	       "2  %d  |  %d  |  %d  \n"                                                     
-	       " _____|_____|_____\n"                                                     
-               "      |     |     \n"                                                     
-	       "3  %d  |  %d  |  %d  \n"                                                     
-	       "      |     |     \n"  
+	tic = ( "   a     b     c\n"                                                
+			"      |     |     \n"                                                     
+			"1  %d  |  %d  |  %d  \n"                                                     
+			" _____|_____|_____\n"                                                     
+			"      |     |     \n"                                                     
+			"2  %d  |  %d  |  %d  \n"                                                     
+			" _____|_____|_____\n"                                                     
+			"      |     |     \n"                                                     
+			"3  %d  |  %d  |  %d  \n"                                                     
+			"      |     |     \n"  
 %(brd[0][0],brd[0][1],brd[0][2],brd[1][0],brd[1][1],brd[1][2],brd[2][0],brd[2][1],brd[2][2]))
 	print(tic)
 
@@ -19,55 +19,53 @@ def funcl(brd):
 def newGAME():
 	boardNEW = [[0,0,0],[0,0,0],[0,0,0]]
 
-def row1(column, brd):
-	if column == 'a':
-		brd[0][0] = 4
-		return brd
-	if column == 'b':
-		brd[0][1] = 4
-		return brd
-	if column == 'c':
-		brd[0][2] = 4
-		return brd
-
-def row2(column, brd):                                                     
-		if column == 'a':                                                  
-			brd[1][0] = 4                                              
-			return brd                                                 
-		if column == 'b':                                                  
-			brd[1][1] = 4                                              
-			return brd                                                 
-		if column == 'c':                                                  
-			brd[1][2] = 4                                              
-			return brd
-
-def row3(column, brd):                                                     
-		if column == 'a':                                                  
-			brd[2][0] = 4                                              
-			return brd                                                 
-		if column == 'b':                                                  
-			brd[2][1] = 4                                              
-			return brd                                                 
-		if column == 'c':                                                  
-			brd[2][2] = 4                                              
-			return brd
-
 def boardMOVEMENT(brd, ROW, COLUMN):
+	if(ROW == '1'):
+		if COLUMN == 'a':
+			brd[0][0] = 4
+		if COLUMN == 'b':
+			brd[0][1] = 4
+		if COLUMN == 'c':
+			brd[0][2] = 4
+	if(ROW == '2'):
+		if COLUMN == 'a':
+			brd[1][0] = 4
+		if COLUMN == 'b':
+			brd[1][1] = 4
+		if COLUMN == 'c':
+			brd[1][2] = 4
+	if(ROW == '3'):
+		if COLUMN == 'a':
+			brd[2][0] = 4
+		if COLUMN == 'b':
+			brd[2][1] = 4
+		if COLUMN == 'c':
+			brd[2][2] = 4
+	return brd
+
+def boardCheck(brd, ROW, COLUMN):
 	if ROW == '1':
-		print('here')
-		x = row1(COLUMN, brd)
-		return x
+		rowCorrect = 0
 	if ROW == '2':
-		y = row2(COLUMN, brd)
-		return y
+		rowCorrect = 1
 	if ROW == '3':
-		z = row3(COLUMN, brd)
-		return z
+		rowCorrect = 2
+
+	if COLUMN == 'a':
+		columnCorrect = 0
+	if COLUMN == 'b':
+		columnCorrect = 1
+	if COLUMN == 'c':
+		columnCorrect = 2	
+
+	if brd[rowCorrect][columnCorrect] == 4:
+		return False
+	else:
+		return True
+
 
 #this is the original board
 boardREAL = [[0,0,0],[0,0,0],[0,0,0]]
-#this is to show the user first time how to
-#play the game
 first = 1
 guide = 'enter, for example "3", then enter "a"'
 s = 'Welcome to my tic tac toe game\n'
@@ -78,30 +76,44 @@ funcl(boardREAL)
 #this is for filtering bad inputs
 inputROW = False
 inputColumn = False
+#this is for making sure that board piece isn't taken
+choice = False
 
 while gameOVER != True:
-	print('enter a spot to place your piece/n')
-	if(first == 1):
-		print(guide)
-		first = 0
-	while(inputROW == False):
-		#this is for filtering bad inputs
-		movementROW = input()
-		if movementROW == '1' or '2' or '3':
-			inputROW = True
-		if(inputROW == False):
-			print('re-enter a correct value')
-			movementROW = ''
 
-	print('now enter your column')
+	while(choice == False):
+		print('enter a spot to place your piece')
+		if(first == 1):
+			print('computers choices are in 1s')
+			print(guide)
+			first = 0
 
-	while(inputColumn == False):
-		movementCOLUMN = input()
-		if movementCOLUMN == 'a' or 'b' or 'c':
-			inputColumn =  True
-		if(inputColumn == False):
-			print('re-enter a correct value')
+		while(inputROW == False):
+			#this is for filtering bad inputs
+			movementROW = input()
+			print(movementROW)
+			if movementROW == '1' or movementROW == '2' or movementROW == '3':
+				inputROW = True
+				print ('here')
+			if(inputROW == False):
+				print('re-enter a correct value')
+				movementROW = ''
+
+		print('now enter your column')
+
+		while(inputColumn == False):
+			movementCOLUMN = input()
+			if movementCOLUMN == 'a' or movementCOLUMN == 'b' or movementCOLUMN == 'c':
+				inputColumn =  True
+			if(inputColumn == False):
+				print('re-enter a correct value')
+				movementCOLUMN = ''
+
+		choice = boardCheck(boardREAL,movementROW,movementCOLUMN)
+		if choice == False:
+			print('Place already taken on board, re-enter a new one')
 			movementCOLUMN = ''
+			movementROW = ''
 
 	#for adding movement to board
 	boardREAL = boardMOVEMENT(boardREAL,movementROW,movementCOLUMN)
@@ -110,3 +122,6 @@ while gameOVER != True:
 	# this if for clearing the inputs after sent to board
 	movementCOLUMN = ''
 	movementROW = ''
+	inputROW = False
+	inputColumn = False
+	choice = False
